@@ -1,6 +1,7 @@
 let bullets = []
 let bulletnr = 0
-let aliens = []
+let aliensLine1 = []
+let aliensLine2 = []
 
 
 function preload(){
@@ -9,6 +10,7 @@ function preload(){
     ship_2 = loadImage("ressources/ship_2.png");
     alien_0 = loadImage("ressources/alien_0.png");
     alien_1 = loadImage("ressources/alien_1.png");
+
    
 }
 
@@ -23,11 +25,14 @@ function setup() {
    
     ship.draw();
 
-  /*  for (i=0; i<5; i++){
-        for(j=0,j<2, j++){
+    for (i=0; i<5; i++){
+        aliensLine1[i]=new Alien(90+50*i,20)
+        aliensLine2[i]=new Alien(90+50*i,70)
+
+        
             
-        }
-    }*/
+    }
+    
 
     alien = new Alien(width/2-10,20)
   
@@ -45,6 +50,13 @@ function draw()
     for (i=0; i< bullets.length; i++){
         bullets[i].draw();
         bullets[i].update();
+    }
+    for (i=0;i<5;i++){
+        aliensLine1[i].draw()
+        aliensLine1[i].update()
+        aliensLine2[i].draw()
+        aliensLine2[i].update()
+        
     }
 }
 
@@ -186,6 +198,9 @@ class Bullet{
 
 
 }
+
+
+
 
 
 
