@@ -25,7 +25,7 @@ function setup() {
    
     ship.draw();
 
-    for (i=0; i<5; i++){
+    for (let i=0; i<5; i++){
         aliensLine1[i]=new Alien(90+50*i,20)
         aliensLine2[i]=new Alien(90+50*i,70)
 
@@ -34,7 +34,7 @@ function setup() {
     }
     
 
-    alien = new Alien(width/2-10,20)
+   // alien = new Alien(width/2-10,20)
   
 
 
@@ -45,19 +45,30 @@ function draw()
 {
     background(0)
     ship.draw()
-    alien.draw()
-    alien.update()
-    for (i=0; i< bullets.length; i++){
+    //alien.draw()
+    //alien.update()
+    for (let i=0; i< bullets.length; i++){
         bullets[i].draw();
         bullets[i].update();
+     //   print("before hasHit")
+        bullets[i].hasHit(aliensLine1);
+        bullets[i].hasHit(aliensLine2);
+        print(i)
+       // print(bullets.length)
+    //    print("after hashit")
+     //  bullets[i].hasHit(aliensLine2);
+
     }
-    for (i=0;i<5;i++){
+    for (let i=0;i<5;i++){
         aliensLine1[i].draw()
         aliensLine1[i].update()
         aliensLine2[i].draw()
         aliensLine2[i].update()
         
     }
+   // print(aliensLine1)
+    if (aliensLine1[0].y > height) 
+        noLoop()
 }
 
 class Alien{
@@ -66,41 +77,37 @@ class Alien{
         this.y = y
         this.alienStage=0;
         this.changeStage = 0;
+        this.alive = true;
        
     }
 
     draw(){
-        
-        if (this.alienStage == 0){
-            image(alien_0,this.x,this.y);
-            
-        }
-        else {
-            image(alien_1,this.x,this.y);
-           // this.changeStage++
-           
-        }
-        
+        if (this.alive) {
+            if (this.alienStage == 0){
+                image(alien_0,this.x,this.y);         
+            }
+            else {
+                image(alien_1,this.x,this.y);
+            // this.changeStage++            
+            }           
+            if (this.changeStage==0){
+                this.alienStage++;
+                if (this.alienStage > 1)
+                    this.alienStage = 0
+           }
+            this.changeStage++
+            if (this.changeStage >5)
+                this.changeStage = 0
 
-        
-        if (this.changeStage==0){
-            this.alienStage++;
-            if (this.alienStage > 1)
-                this.alienStage = 0
-
-            
-        
-            
         }
-        this.changeStage++
-        if (this.changeStage >5)
-            this.changeStage = 0
+
         
    
     }
     update(){
-        
-        this.y++
+        //alien skal kun flytte sig nedad hver 3. gang. Eller er den for hurtig
+        if (this.alienStage==0)
+            this.y++
     }
 
 
@@ -177,22 +184,42 @@ class Ship{
     fire(){
         bullets[bulletnr]= new Bullet(this.x+22,this.y)
         bulletnr++;
+      //  print(bulletnr)
+      //  print(bullets)
     }
 }
 
 class Bullet{
     constructor(x,y){
-        this.x = x
-        this.y = y
+        this.x = x;
+        this.y = y;
+        this.hasNotHit = true;
+        
     }
 
     draw(){
-        fill(255,0,0)
-        circle(this.x,this.y,7)
+        if(this.hasNotHit){
+            fill(255,0,0)
+            circle(this.x,this.y,7)
+        }
     }
 
     update(){
-        this.y--
+        //Bullets skal flytte sig to op ad gangen. Ellers er den for langsom
+        this.y-=2
+    }
+
+    hasHit(aliens){
+        for (let i=0;i<aliens.length;i++){
+            if (aliens[i].alive && this.hasNotHit){
+                if (this.x > (aliens[i].x)-3 && this.x < (aliens[i].x)+27
+                    && this.y > (aliens[i].y)-3 && this.y < (aliens[i].y)+27){
+                    print("true")
+                    aliens[i].alive = false;
+                    this.hasNotHit = false;
+                }
+            }
+        }
     }
 
 
