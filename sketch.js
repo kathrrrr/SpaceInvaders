@@ -53,7 +53,7 @@ function draw()
      //   print("before hasHit")
         bullets[i].hasHit(aliensLine1);
         bullets[i].hasHit(aliensLine2);
-        print(i)
+      //  print(i)
        // print(bullets.length)
     //    print("after hashit")
      //  bullets[i].hasHit(aliensLine2);
@@ -66,7 +66,11 @@ function draw()
         aliensLine2[i].update()
         
     }
-   // print(aliensLine1)
+    print("locationStage "+aliensLine1[2].locationStage)
+    print(aliensLine1[2].x)
+    print(aliensLine1[2].y)
+    print(aliensLine1[2].dx)
+    print(aliensLine1[2])
     if (aliensLine1[0].y > height) 
         noLoop()
 }
@@ -78,6 +82,9 @@ class Alien{
         this.alienStage=0;
         this.changeStage = 0;
         this.alive = true;
+        this.locationStage = 0
+        this.diff_locationStage = 1
+        this.dx = 3
        
     }
 
@@ -105,10 +112,69 @@ class Alien{
    
     }
     update(){
-        //alien skal kun flytte sig nedad hver 3. gang. Eller er den for hurtig
-        if (this.alienStage==0)
-            this.y++
+        if (this.locationStage == 16 ) {
+            this.y+=3
+            this.dx = -this.dx
+            this.locationStage++
+        }
+        else if(this.locationStage==48){
+            this.y+=3
+            this.dx = -this.dx
+            this.locationStage = -15    
+
+        }
+        else {
+
+        this.x += this.dx
+        this.locationStage++
+        }
+
+       /* if (this.locatonStage <16){
+            this.x+=dx;
+            this.locationStage++;
+        }
+        else if (this.locationStage == 16){
+            this.y+=3
+            this.locationStage++            
+        }
+        else if (this.locationStage < 48){
+            this.x-=3
+            this.locationStage++
+        }
+        else {
+            this.y+=3
+            this.locationStage=0
+        }
+
+*/
+
+        //
+       /* if (this.locationStage <24){
+            this.x+=3
+        }
+        else if (this.locationStage == 24){
+        //    print("kommer jeg her")
+        
+        //if (this.alienStage==0)
+            this.y+=10
+            this.x-=3 
+        }
+        else if (this.locationStage <32){
+            this.x-=3
+        }
+        else if (this.locationStage==32){
+            this.y+=10
+            this.x+=3
+            this.locationStage = 0
+        }
+        else if (this.loctionStage)
+        this.locationStage++
+        //print(this.locationStage)
+        //print(this.x)
+        //print(this.y)*/
     }
+
+    
 
 
 
@@ -214,7 +280,7 @@ class Bullet{
             if (aliens[i].alive && this.hasNotHit){
                 if (this.x > (aliens[i].x)-3 && this.x < (aliens[i].x)+27
                     && this.y > (aliens[i].y)-3 && this.y < (aliens[i].y)+27){
-                    print("true")
+                   // print("true")
                     aliens[i].alive = false;
                     this.hasNotHit = false;
                 }
@@ -225,9 +291,6 @@ class Bullet{
 
 
 }
-
-
-
 
 
 
