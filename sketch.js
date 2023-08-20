@@ -66,11 +66,11 @@ function draw()
         aliensLine2[i].update()
         
     }
-    print("locationStage "+aliensLine1[2].locationStage)
-    print(aliensLine1[2].x)
-    print(aliensLine1[2].y)
-    print(aliensLine1[2].dx)
-    print(aliensLine1[2])
+    //print("locationStage "aliensLine1[2].locationStage)
+    //print(aliensLine1[2].x)
+    //print(aliensLine1[2].y)
+    //print(aliensLine1[2].dx)
+    //print(aliensLine1[2])
     if (aliensLine1[0].y > height) 
         noLoop()
 }
@@ -129,49 +129,6 @@ class Alien{
         this.locationStage++
         }
 
-       /* if (this.locatonStage <16){
-            this.x+=dx;
-            this.locationStage++;
-        }
-        else if (this.locationStage == 16){
-            this.y+=3
-            this.locationStage++            
-        }
-        else if (this.locationStage < 48){
-            this.x-=3
-            this.locationStage++
-        }
-        else {
-            this.y+=3
-            this.locationStage=0
-        }
-
-*/
-
-        //
-       /* if (this.locationStage <24){
-            this.x+=3
-        }
-        else if (this.locationStage == 24){
-        //    print("kommer jeg her")
-        
-        //if (this.alienStage==0)
-            this.y+=10
-            this.x-=3 
-        }
-        else if (this.locationStage <32){
-            this.x-=3
-        }
-        else if (this.locationStage==32){
-            this.y+=10
-            this.x+=3
-            this.locationStage = 0
-        }
-        else if (this.loctionStage)
-        this.locationStage++
-        //print(this.locationStage)
-        //print(this.x)
-        //print(this.y)*/
     }
 
     
@@ -183,11 +140,7 @@ class Alien{
 
 
 function keyPressed() {
-    if (keyCode === LEFT_ARROW) {
-      ship.moveLeft();
-    } else if (keyCode === RIGHT_ARROW) {
-      ship.moveRight();
-    } else if (keyCode === 32) {
+   if (keyCode === 32) {
         ship.fire()
     }
 
@@ -202,16 +155,21 @@ class Ship{
         this.changeStage = 0;
     }
 
-    moveRight(){
-        this.x+=5;
+    move(){
+        if (keyIsDown(LEFT_ARROW)){
+            this.x-=5;
+        }
+        if (keyIsDown(RIGHT_ARROW)){
+            this.x+=5;
+        }
+        
 
-    }
-    moveLeft(){
-        this.x-=5;
+
     }
     
 
     draw(){
+        this.move()
         if (this.shipStage == 0){
             image(ship_0,this.x,this.y);
            // this.changeStage++
