@@ -43,7 +43,7 @@ function setup() {
 
 function draw()
 {
-    background(0)
+    background(14)
     ship.draw()
     //alien.draw()
     //alien.update()
